@@ -1,7 +1,9 @@
 ﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using _1TDD_string_calc_kata;
+using Assert = NUnit.Framework.Assert;
 
 namespace _1TDD_string_calc_kataTest
 {
@@ -65,10 +67,10 @@ namespace _1TDD_string_calc_kataTest
         [TestCase("1.2")] // not a comma
         [TestCase("a,b")] // not a number
         [TestCase("a.b")] // not a comma or a number
+        [TestCase("1,b")] // an extra test
         public void Test_AnInvalidInputToAdd(string input)
         {
-            var response = _calculator.Add(input);
-            // Assert.Throws(); it throws an error?
+            Assert.That(() => _calculator.Add(input), Throws.Exception);
         }
 
         [Test]
@@ -81,5 +83,13 @@ namespace _1TDD_string_calc_kataTest
 
         //test if //[splitter/delimiter]\n[numbers]
         // example: //;\n1;2 OR //$\n1$2$3$4
+
+        [Test]
+        [TestCase("-1,2")]
+        [TestCase("-1,-2")]
+        public void Test_WhenANegativeNumberIsGivenToAdd(string input)
+        {
+            
+        }
     }
 }
