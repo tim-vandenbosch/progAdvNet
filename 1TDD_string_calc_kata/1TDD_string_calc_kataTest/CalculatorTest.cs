@@ -26,70 +26,75 @@ namespace _1TDD_string_calc_kataTest
         // [TestCase(" ")] // --> could be checked too IF I made it
         public void Test_WhenNoNumbersIsGivenToAdd(string input)
         {
-            // Act
-            var solution = _calculator.Add(input);
-            // Assert
-            Assert.AreEqual(0, solution);
+            var response = _calculator.Add(input);
+            Assert.That(response, Is.EqualTo(0));
         }
 
         [Test]
         [TestCase("1", 1)]
         [TestCase("2", 2)]
-        // ...
+        [TestCase("3", 3)]
         public void Test_WhenOneNumberIsGivenToAdd(string input, int expected)
         {
-            var response = _calculator.Add(input);
-            // Assert.AreEqual(expected, response);
-            Assert.That(response, Is.EqualTo(expected));
+            Check(input, expected);
         }
-
+        
         [Test]
-        [TestCase("1,2",3)]
-        [TestCase("0,1",1)]
+        [TestCase("1, 2", 3)]
+        [TestCase("0, 1", 1)]
         public void Test_WhenTwoNumbersAreGivenToAdd(string input, int expected)
         {
-            var response = _calculator.Add(input);
-            // Assert.AreEqual(expected, response);
-            Assert.That(response, Is.EqualTo(expected));
+            Check(input, expected);
         }
 
         [Test]
-        [TestCase("1,2,3,4,5",15)]
-        [TestCase("1,1,1,1,1,1,1,1,1,1",10)]
+        [TestCase("1, 2, 3, 4, 5", 15)]
+        [TestCase("1, 1, 1, 1, 1, 1, 1, 1, 1, 1", 10)]
         public void Test_RandomAmountOfNumbersAreGivenToAdd(string input, int expected)
         {
-            var response = _calculator.Add(input);
-            // Assert.AreEqual(expected, response);
-            Assert.That(response, Is.EqualTo(expected));
+            Check(input, expected);
         }
 
         [Test]
-        [TestCase("1.2")] // not a comma
-        [TestCase("a,b")] // not a number
-        [TestCase("a.b")] // not a comma or a number
-        [TestCase("1,b")] // an extra test
+        [TestCase("1. 2")] // not a comma
+        [TestCase("a, b")] // not a number
+        [TestCase("a. b")] // not a comma or a number
+        [TestCase("1, b")] // an extra test
         public void Test_AnInvalidInputToAdd(string input)
         {
             Assert.That(() => _calculator.Add(input), Throws.Exception);
         }
 
         [Test]
-        [TestCase("1\n2,3", 6)]
+        [TestCase("1\n2, 3", 6)]
         // [TestCase("1,\n2", ....)] // -> This is not accepted, so this should throw an error?
         public void Test_WhenANewLineIsUsedToGiveToAdd(string input, int expected)
         {
-            
+            Check(input, expected);
         }
 
         //test if //[splitter/delimiter]\n[numbers]
         // example: //;\n1;2 OR //$\n1$2$3$4
+        [Test]
+        [TestCase("//;\n1;2", 3)]
+        [TestCase("//$\n1$2$3$4", 10)]
+        public void Test_WhenADelimiterOrSplitterIsGivenToAdd(string input, int expected)
+        {
+            Check(input, expected);
+        }
 
         [Test]
-        [TestCase("-1,2")]
-        [TestCase("-1,-2")]
+        [TestCase("-1, 2")]
+        [TestCase("-1, -2")]
         public void Test_WhenANegativeNumberIsGivenToAdd(string input)
         {
-            
+            Assert.That(() => _calculator.Add(input), Throws.Exception);
+        }
+        
+        private void Check(string input, int expected)
+        {
+            var response = _calculator.Add(input);
+            Assert.That(response, Is.EqualTo(expected));
         }
     }
 }
