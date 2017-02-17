@@ -27,7 +27,7 @@ namespace _1TDD_string_calc_kata
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            var numbers = textBox.Text;
+            var numbers = richTextBox.ToString();
             Calculator calc = new Calculator();
             MessageBox.Show("The sum is: "+ calc.Add(numbers));
         }
