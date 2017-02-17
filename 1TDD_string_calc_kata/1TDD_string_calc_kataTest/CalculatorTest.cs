@@ -63,10 +63,12 @@ namespace _1TDD_string_calc_kataTest
         public void Test_AnInvalidInputToAdd(string input)
         {
             Assert.That(() => _calculator.Add(input), Throws.Exception);
+            // Assert.That(_calculator.Add(input), Is.NaN);
         }
 
         [Test]
         [TestCase("1\n2, 3", 6)]
+        [TestCase("1, 2\n3", 6)]
         // [TestCase("1,\n2", ....)] // -> This is not accepted, so this should throw an error?
         public void Test_WhenANewLineIsUsedToGiveToAdd(string input, int expected)
         {
@@ -75,21 +77,21 @@ namespace _1TDD_string_calc_kataTest
 
         //test if //[splitter/delimiter]\n[numbers]
         // example: //;\n1;2 OR //$\n1$2$3$4
-        [Test]
-        [TestCase("//;\n1;2", 3)]
-        [TestCase("//$\n1$2$3$4", 10)]
-        public void Test_WhenADelimiterOrSplitterIsGivenToAdd(string input, int expected)
-        {
-            Check(input, expected);
-        }
+        //[Test]
+        //[TestCase("//;\n1;2", 3)]
+        //[TestCase("//$\n1$2$3$4", 10)]
+        //public void Test_WhenADelimiterOrSplitterIsGivenToAdd(string input, int expected)
+        //{
+        //    // Check(input, expected);
+        //}
 
-        [Test]
-        [TestCase("-1, 2")]
-        [TestCase("-1, -2")]
-        public void Test_WhenANegativeNumberIsGivenToAdd(string input)
-        {
-            Assert.That(() => _calculator.Add(input), Throws.Exception);
-        }
+        //[Test]
+        //[TestCase("-1, 2")]
+        //[TestCase("-1, -2")]
+        //public void Test_WhenANegativeNumberIsGivenToAdd(string input)
+        //{
+        //    // Assert.That(() => _calculator.Add(input), Throws.Exception);
+        //}
         
         private void Check(string input, int expected)
         {
