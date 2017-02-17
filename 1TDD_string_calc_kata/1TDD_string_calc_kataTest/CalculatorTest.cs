@@ -70,6 +70,7 @@ namespace _1TDD_string_calc_kataTest
         [TestCase("1\n2, 3", 6)]
         [TestCase("1, 2\n3", 6)]
         [TestCase("1, 2, 2\n1", 6)]
+        [TestCase("\n1,2",3)]
         // [TestCase("1,\n2", ....)] // -> This is not accepted, so this should throw an error?
         public void Test_WhenANewLineIsUsedToGiveToAdd(string input, int expected)
         {
@@ -87,6 +88,7 @@ namespace _1TDD_string_calc_kataTest
         // test if //[splitter/delimiter]\n[numbers]
         // example: //;\n1;2 OR //$\n1$2$3$4
         [Test]
+        [TestCase("//;1\n1;2", 4)]
         [TestCase("//;\n1;2", 3)]
         [TestCase("//$\n1$2$3$4", 10)]
         public void Test_WhenADelimiterOrSplitterIsGivenToAdd(string input, int expected)
