@@ -20,6 +20,21 @@ namespace _1TDD_string_calc_kataTest
             _calculator = new Calculator();
         }
 
+        // function that checks the input with the expected
+        private void CheckFunctionWith(string input, int expected)
+        {
+            var response = _calculator.Add(input);
+            Assert.That(response, Is.EqualTo(expected));
+        }
+
+        // function that checks if the input gives an exception
+        private void CheckExceptionWith(string input)
+        {
+            Assert.That(() => _calculator.Add(input), Throws.Exception);
+        }
+
+        #region TestsMethods For Class Calculator
+
         [Test]
         [TestCase("")]
         [TestCase(null)]
@@ -36,7 +51,7 @@ namespace _1TDD_string_calc_kataTest
         [TestCase("3", 3)]
         public void Test_WhenOneNumberIsGivenToAdd(string input, int expected)
         {
-            Check(input, expected);
+            CheckFunctionWith(input, expected);
         }
         
         [Test]
@@ -44,7 +59,7 @@ namespace _1TDD_string_calc_kataTest
         [TestCase("0, 1", 1)]
         public void Test_WhenTwoNumbersAreGivenToAdd(string input, int expected)
         {
-            Check(input, expected);
+            CheckFunctionWith(input, expected);
         }
 
         [Test]
@@ -52,7 +67,7 @@ namespace _1TDD_string_calc_kataTest
         [TestCase("1, 1, 1, 1, 1, 1, 1, 1, 1, 1", 10)]
         public void Test_RandomAmountOfNumbersAreGivenToAdd(string input, int expected)
         {
-            Check(input, expected);
+            CheckFunctionWith(input, expected);
         }
 
         [Test]
@@ -62,8 +77,7 @@ namespace _1TDD_string_calc_kataTest
         [TestCase("1, b")] // an extra test
         public void Test_AnInvalidInputToAdd(string input)
         {
-            Assert.That(() => _calculator.Add(input), Throws.Exception);
-            // Assert.That(_calculator.Add(input), Is.NaN);
+            CheckExceptionWith(input);
         }
 
         [Test]
@@ -74,7 +88,7 @@ namespace _1TDD_string_calc_kataTest
         // [TestCase("1,\n2", ....)] // -> This is not accepted, so this should throw an error?
         public void Test_WhenANewLineIsUsedToGiveToAdd(string input, int expected)
         {
-            Check(input, expected);
+            CheckFunctionWith(input, expected);
         }
 
         [Test]
@@ -82,7 +96,7 @@ namespace _1TDD_string_calc_kataTest
         [TestCase("1\n,2")]
         public void Test_WhenANewLineIsIncorrectlyGivenToAdd(string input)
         {
-            Assert.That(() => _calculator.Add(input), Throws.Exception);
+            CheckExceptionWith(input);
         }
 
         // test if //[splitter/delimiter]\n[numbers]
@@ -93,21 +107,18 @@ namespace _1TDD_string_calc_kataTest
         [TestCase("//$\n1$2$3$4", 10)]
         public void Test_WhenADelimiterOrSplitterIsGivenToAdd(string input, int expected)
         {
-            Check(input, expected);
+            CheckFunctionWith(input, expected);
         }
 
-        //[Test]
-        //[TestCase("-1, 2")]
-        //[TestCase("-1, -2")]
-        //public void Test_WhenANegativeNumberIsGivenToAdd(string input)
-        //{
-        //    // Assert.That(() => _calculator.Add(input), Throws.Exception);
-        //}
-
-        private void Check(string input, int expected)
+        [Test]
+        [TestCase("-1, 2")]
+        [TestCase("1, -2")]
+        [TestCase("-1, -2")]
+        public void Test_WhenANegativeNumberIsGivenToAdd(string input)
         {
-            var response = _calculator.Add(input);
-            Assert.That(response, Is.EqualTo(expected));
+            CheckExceptionWith(input);
         }
+        
+        #endregion
     }
 }
