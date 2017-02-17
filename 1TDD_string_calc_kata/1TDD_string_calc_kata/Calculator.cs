@@ -5,7 +5,8 @@ namespace _1TDD_string_calc_kata
 {
     public class Calculator
     {
-
+        #region Local Variables For Class Calculator
+        
         private string[] _numbersStringArray;
         private char _splitter = ',';
         private int[] _numbersArray;
@@ -13,6 +14,17 @@ namespace _1TDD_string_calc_kata
         private int _indexOfTheNumbersArray = 0;
         private string _rawInputNumbersString;
 
+        #endregion
+
+        /// <summary>
+        /// The given string will be checked for correct input.
+        /// The delimiter will be configured (if none given it takes the default)
+        /// The string will be split in string-numbers
+        /// string -> int
+        /// all the numbers will be added to eachother
+        /// </summary>
+        /// <param name="rawInputNumberString"></param>
+        /// <returns></returns>
         public int Add(string rawInputNumberString)
         {
             _rawInputNumbersString = rawInputNumberString;
@@ -28,6 +40,8 @@ namespace _1TDD_string_calc_kata
             AddNumbersToEachOther();
             return _response;
         }
+
+        #region Helping Functions for Method Add
 
         private void CheckForANewDelimiter()
         {
@@ -80,5 +94,7 @@ namespace _1TDD_string_calc_kata
                 _response += _numbersArray[numberIndex];
             }
         }
+
+        #endregion
     }
 }
