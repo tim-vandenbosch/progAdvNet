@@ -5,38 +5,54 @@ namespace _1TDD_string_calc_kata
 {
     public class Calculator
     {
+        private string[] _numbersStringArray;
+        private Char _splitter;
+        private int[] _numbersArray;
+        private int _response = 0;
+        private int _indexOfTheNumbersArray = 0;
+
         public int Add(string numbersString)
         {
-            int response = 0;
-
             if (string.IsNullOrEmpty(numbersString))
             {
-                return response = 0;
+                return _response = 0;
             }
             else
             {
-                Char splitter = ',';
-                string[] separatedNumbers = numbersString.Split(splitter);
-                int[] numbersInt = new int[separatedNumbers.Length];
-                int index = 0;
-                foreach (var nr in separatedNumbers)
+                _splitter = ',';
+                _numbersStringArray = numbersString.Split(_splitter);
+                _numbersArray = new int[_numbersStringArray.Length];
+                
+
+                FillNumbersArray();
+                AddNumbers();
+                return _response;
+            }
+        }
+
+        private void FillNumbersArray()
+        {
+            foreach (var nr in _numbersStringArray)
+            {
+                try
                 {
-                    try
-                    {
-                        numbersInt[index] = Convert.ToInt32(separatedNumbers[index]);
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.Show("Invalid number");
-                        throw;
-                    }
-                    index++;
+                    _numbersArray[_indexOfTheNumbersArray] = Convert.ToInt32(_numbersStringArray[_indexOfTheNumbersArray]);
                 }
-                for (int numberIndex = 0; numberIndex < separatedNumbers.Length; numberIndex++)
+                catch (Exception e)
                 {
-                    response += numbersInt[numberIndex];
+                    // MessageBox.Show("Invalid number: " + _numbersStringArray[_indexOfTheNumbersArray]);
+                    Console.WriteLine("Invalid number: " + _numbersStringArray[_indexOfTheNumbersArray]);
+                    throw;
                 }
-                return response;
+                _indexOfTheNumbersArray++;
+            }
+        }
+
+        private void AddNumbers()
+        {
+            for (int numberIndex = 0; numberIndex < _numbersStringArray.Length; numberIndex++)
+            {
+                _response += _numbersArray[numberIndex];
             }
         }
     }
