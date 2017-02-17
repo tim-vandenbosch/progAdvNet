@@ -5,28 +5,41 @@ namespace _1TDD_string_calc_kata
 {
     public class Calculator
     {
+
         private string[] _numbersStringArray;
-        private Char _splitter;
+        private char _splitter = ',';
         private int[] _numbersArray;
         private int _response = 0;
         private int _indexOfTheNumbersArray = 0;
+        private string _rawInputNumbersString;
 
-        public int Add(string numbersString)
+        public int Add(string input)
         {
-            if (string.IsNullOrEmpty(numbersString))
-            {
+            _rawInputNumbersString = input;
+            if (string.IsNullOrEmpty(_rawInputNumbersString) || _rawInputNumbersString.Equals(" "))
                 return _response = 0;
+            
+            CheckForNewLinesAndRemoveThem();
+            _numbersStringArray = _rawInputNumbersString.Split(_splitter);
+            _numbersArray = new int[_numbersStringArray.Length];
+            FillNumbersArray();
+            AddNumbersToEachOther();
+            return _response;
+        }
+
+        private void CheckForNewLinesAndRemoveThem()
+        {
+            if (_rawInputNumbersString.Contains("\n" + _splitter) || _rawInputNumbersString.Contains(_splitter + "\n"))
+            {
+                Console.WriteLine("The given input is incorrect: " + _rawInputNumbersString);
+                throw new Exception();
             }
             else
             {
-                _splitter = ',';
-                _numbersStringArray = numbersString.Split(_splitter);
-                _numbersArray = new int[_numbersStringArray.Length];
-                
-
-                FillNumbersArray();
-                AddNumbers();
-                return _response;
+                if (_rawInputNumbersString.Contains("\n"))
+                {
+                    _rawInputNumbersString = _rawInputNumbersString.Replace("\n", _splitter.ToString());
+                }
             }
         }
 
@@ -48,7 +61,7 @@ namespace _1TDD_string_calc_kata
             }
         }
 
-        private void AddNumbers()
+        private void AddNumbersToEachOther()
         {
             for (int numberIndex = 0; numberIndex < _numbersStringArray.Length; numberIndex++)
             {
