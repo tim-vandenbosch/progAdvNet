@@ -11,7 +11,6 @@ namespace _1TDD_string_calc_kata
         private char _splitter = ',';
         private int[] _numbersArray;
         private int _response = 0;
-        private int _indexOfTheNumbersArray = 0;
         private string _rawInputNumbersString;
 
         #endregion
@@ -35,6 +34,7 @@ namespace _1TDD_string_calc_kata
             CheckForANewDelimiter();
             CheckForNewLinesAndRemoveThem();
             _numbersStringArray = _rawInputNumbersString.Split(_splitter);
+            CheckForNegativeNumbers();
             _numbersArray = new int[_numbersStringArray.Length];
             FillNumbersArray();
             AddNumbersToEachOther();
@@ -43,6 +43,20 @@ namespace _1TDD_string_calc_kata
 
         #region Helping Functions for Method Add
 
+        private void CheckForNegativeNumbers()
+        {
+            var errorStringOfNegativeNumbers = "";
+            foreach (var number in _numbersStringArray)
+            {
+                if (number.Contains("-"))
+                {
+                    errorStringOfNegativeNumbers += number + " ";
+                }
+            }
+            if (!errorStringOfNegativeNumbers.Equals(""))
+                throw new Exception("Negatives not allowed: " + errorStringOfNegativeNumbers);
+        }
+        
         private void CheckForANewDelimiter()
         {
             if (!_rawInputNumbersString.Contains("//")) return;
@@ -71,19 +85,20 @@ namespace _1TDD_string_calc_kata
 
         private void FillNumbersArray()
         {
+            var indexOfTheNumbersArray = 0;
             foreach (var nr in _numbersStringArray)
             {
                 try
                 {
-                    _numbersArray[_indexOfTheNumbersArray] = Convert.ToInt32(_numbersStringArray[_indexOfTheNumbersArray]);
+                    _numbersArray[indexOfTheNumbersArray] = Convert.ToInt32(_numbersStringArray[indexOfTheNumbersArray]);
                 }
                 catch (Exception e)
                 {
                     // MessageBox.Show("Invalid number: " + _numbersStringArray[_indexOfTheNumbersArray]);
-                    Console.WriteLine("Invalid number: " + _numbersStringArray[_indexOfTheNumbersArray]);
+                    Console.WriteLine("Invalid number: " + _numbersStringArray[indexOfTheNumbersArray]);
                     throw;
                 }
-                _indexOfTheNumbersArray++;
+                indexOfTheNumbersArray++;
             }
         }
 
