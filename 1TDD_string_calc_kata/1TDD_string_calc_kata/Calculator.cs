@@ -26,8 +26,9 @@ namespace _1TDD_string_calc_kata
         /// <returns></returns>
         public int Add(string rawInputNumberString)
         {
+            // !!!How to avoid this?!!!
             _rawInputNumbersString = rawInputNumberString;
-
+            // check for empty input !!!Why can't I put this in a different function?!!!
             if (string.IsNullOrEmpty(_rawInputNumbersString) || _rawInputNumbersString.Equals(" "))
                 return _response = 0;
 
@@ -77,14 +78,13 @@ namespace _1TDD_string_calc_kata
                     _rawInputNumbersString = _rawInputNumbersString.TrimStart('\n');
 
                 if (_rawInputNumbersString.Contains("\n"))
-                {
                     _rawInputNumbersString = _rawInputNumbersString.Replace("\n", _splitter.ToString());
-                }
             }
         }
 
         private void FillNumbersArray()
         {
+            // !!!How to get rid of this indexOfTheNumbersArray!!!
             var indexOfTheNumbersArray = 0;
             foreach (var nr in _numbersStringArray)
             {
@@ -104,7 +104,7 @@ namespace _1TDD_string_calc_kata
 
         private void AddNumbersToEachOther()
         {
-            for (int numberIndex = 0; numberIndex < _numbersStringArray.Length; numberIndex++)
+            for (var numberIndex = 0; numberIndex < _numbersStringArray.Length; numberIndex++)
             {
                 _response += _numbersArray[numberIndex];
             }
