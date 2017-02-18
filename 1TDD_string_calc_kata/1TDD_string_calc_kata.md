@@ -1,6 +1,6 @@
 # PXL
 ## Programming Advanced NET
-### 1TDD_string_calc_kata -> Test Driven Development -*unfinished*
+### 1TDD_string_calc_kata -> Test Driven Development -*Finished*
 
 #### Basic
 1. simple string calculator with a method *int Add(string numbers)*  
