@@ -20,7 +20,9 @@ namespace _1TDD_string_calc_kata
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Calculator calc = new Calculator();
+        // create Calculator
+        private Calculator _calc = new Calculator();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -29,7 +31,7 @@ namespace _1TDD_string_calc_kata
         private void button_Click(object sender, RoutedEventArgs e)
         {
             string numbers = textBox.Text;
-            MessageBox.Show("The sum is: "+ calc.Add(numbers));
+            MessageBox.Show("The sum is: "+ _calc.Add(numbers));
         }
     }
 }
