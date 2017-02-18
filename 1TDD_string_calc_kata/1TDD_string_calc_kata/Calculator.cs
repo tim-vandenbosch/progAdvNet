@@ -54,6 +54,7 @@ namespace _1TDD_string_calc_kata
                     errorStringOfNegativeNumbers += number + " ";
                 }
             }
+
             if (!errorStringOfNegativeNumbers.Equals(""))
                 throw new Exception("Negatives not allowed: " + errorStringOfNegativeNumbers);
         }
@@ -61,6 +62,7 @@ namespace _1TDD_string_calc_kata
         private void CheckForANewDelimiter()
         {
             if (!_rawInputNumbersString.Contains("//")) return;
+
             _splitter = Convert.ToChar(_rawInputNumbersString.Substring(2, 1));
             _rawInputNumbersString = _rawInputNumbersString.Substring(3);
         }
@@ -84,9 +86,7 @@ namespace _1TDD_string_calc_kata
 
         private void FillNumbersArray()
         {
-            // !!!How to get rid of this indexOfTheNumbersArray!!!
-            var indexOfTheNumbersArray = 0;
-            foreach (var nr in _numbersStringArray)
+            for (var indexOfTheNumbersArray = 0; indexOfTheNumbersArray < _numbersArray.Length; indexOfTheNumbersArray++)
             {
                 try
                 {
@@ -98,16 +98,13 @@ namespace _1TDD_string_calc_kata
                     Console.WriteLine("Invalid number: " + _numbersStringArray[indexOfTheNumbersArray]);
                     throw;
                 }
-                indexOfTheNumbersArray++;
             }
         }
 
         private void AddNumbersToEachOther()
         {
             for (var numberIndex = 0; numberIndex < _numbersStringArray.Length; numberIndex++)
-            {
                 _response += _numbersArray[numberIndex];
-            }
         }
 
         #endregion
