@@ -30,13 +30,15 @@ namespace _1TDD_string_calc_kata
             _rawInputNumbersString = rawInputNumberString;
             // check for empty input !!!Why can't I put this in a different function?!!!
             if (string.IsNullOrEmpty(_rawInputNumbersString) || _rawInputNumbersString.Equals(" "))
-                return _response = 0;
+                return 0;// _response = 0;
 
             CheckForANewDelimiter();
             CheckForNewLinesAndRemoveThem();
+            // get all the numbers as string
             _numbersStringArray = _rawInputNumbersString.Split(_splitter);
             CheckForNegativeNumbers();
             _numbersArray = new int[_numbersStringArray.Length];
+            // get all the numbers as int
             FillNumbersArray();
             AddNumbersToEachOther();
             return _response;
