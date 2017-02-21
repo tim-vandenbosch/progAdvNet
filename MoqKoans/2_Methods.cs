@@ -33,9 +33,9 @@ namespace MoqKoans
 			var volumeMock = new Mock<IVolume>();
 			var volume = volumeMock.Object;
 
-			Assert.AreEqual(___, volume.CurrentVolume());
-			Assert.AreEqual(___, volume.Louder(0));
-			Assert.AreEqual(___, volume.Quieter(0));
+			Assert.AreEqual(null, volume.CurrentVolume());
+			Assert.AreEqual(0, volume.Louder(0));
+			Assert.AreEqual(0, volume.Quieter(0));
 		}
 
 		[Test]
@@ -63,7 +63,7 @@ namespace MoqKoans
 			{
 				exceptionWasThrown = true;
 			}
-			Assert.AreEqual(___, exceptionWasThrown);
+			Assert.AreEqual(true, exceptionWasThrown);
 		}
 
 		[Test]
@@ -84,7 +84,7 @@ namespace MoqKoans
 			{
 				exceptionWasThrown = true;
 			}
-			Assert.AreEqual(___, exceptionWasThrown);
+			Assert.AreEqual(false, exceptionWasThrown);
 		}
 
 		[Test]
@@ -93,7 +93,7 @@ namespace MoqKoans
 			var mock = new Mock<IVolume>(MockBehavior.Strict);
 			mock.Setup(m => m.CurrentVolume()).Returns("100");
 
-			Assert.AreEqual(___, mock.Object.CurrentVolume());
+			Assert.AreEqual("100", mock.Object.CurrentVolume());
 		}
 
 		[Test]
