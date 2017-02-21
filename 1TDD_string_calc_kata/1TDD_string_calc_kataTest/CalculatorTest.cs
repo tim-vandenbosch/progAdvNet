@@ -96,7 +96,7 @@ namespace _1TDD_string_calc_kataTest
         [TestCase("1\n,2")]
         public void Test_WhenANewLineIsIncorrectlyGivenToAdd(string input)
         {
-            CheckExceptionWith(input);
+            CheckExceptionWith(input); // this should check if the error-string is "incorrect number"
         }
 
         // test if //[splitter/delimiter]\n[numbers]
@@ -116,7 +116,7 @@ namespace _1TDD_string_calc_kataTest
         [TestCase("-1, -2")]
         public void Test_WhenANegativeNumberIsGivenToAdd(string input)
         {
-            CheckExceptionWith(input);
+            CheckExceptionWith(input); // this shouldcheck if the error-string is "can't give negative number" + negativenumbers
         }
         
         #endregion
