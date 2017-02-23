@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web.Http;
 using School.data;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 
-namespace apiExample.Api
+namespace apiExample
 {
     public class DependencyConfig
     {
