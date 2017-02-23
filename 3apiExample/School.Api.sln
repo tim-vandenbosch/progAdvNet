@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apiExample", "apiExample\apiExample.csproj", "{21153573-F66F-4DBF-9339-577749D179A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "School.Api", "apiExample\School.Api.csproj", "{21153573-F66F-4DBF-9339-577749D179A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apiExample.Tests", "apiExample.Tests\apiExample.Tests.csproj", "{C0E84081-A65F-4327-B996-6320C415C316}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "School.Api.Tests", "apiExample.Tests\School.Api.Tests.csproj", "{C0E84081-A65F-4327-B996-6320C415C316}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "School.data", "School.data\School.data.csproj", "{9B8C9557-F51B-4E3F-9939-7BDB06A340A6}"
 EndProject
