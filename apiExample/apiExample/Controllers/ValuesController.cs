@@ -7,10 +7,17 @@ using System.Web.Http;
 
 namespace apiExample.Controllers
 {
+    /// <summary>
+    /// Manage important system values
+    /// </summary>
     [Authorize]
     public class ValuesController : ApiController
     {
         // GET api/values
+        /// <summary>
+        /// Gets all the values in the system
+        /// </summary>
+        /// <returns>something</returns>
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };

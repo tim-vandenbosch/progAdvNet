@@ -6,13 +6,17 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using apiExample.Api;
 
 namespace apiExample
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
+        // Here starts the application
         protected void Application_Start()
         {
+            // Added our own dependency
+            DependencyConfig.RegisterDependencies();
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
