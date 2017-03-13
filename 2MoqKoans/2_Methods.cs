@@ -100,7 +100,7 @@ namespace MoqKoans
 		public void WriteASetupMethodToMakeCurrentVolumeReturnTheExpectedValue()
 		{
 			var mock = new Mock<IVolume>();
-			mock.___();
+		    mock.Setup(msg => msg.CurrentVolume()).Returns("yay!");
 
 			Assert.AreEqual("yay!", mock.Object.CurrentVolume());
 		}
@@ -113,7 +113,7 @@ namespace MoqKoans
 			mock.Setup(m => m.CurrentVolume()).Returns("10");
 			mock.Setup(m => m.CurrentVolume()).Returns("50");
 
-			Assert.AreEqual(___, mock.Object.CurrentVolume());
+			Assert.AreEqual("50", mock.Object.CurrentVolume());
 		}
 
 		[Test]
@@ -126,10 +126,10 @@ namespace MoqKoans
 
 			mock.Setup(m => m.CurrentVolume()).Returns(currentVolume.ToString());
 
-			Assert.AreEqual(___, mock.Object.CurrentVolume());
+			Assert.AreEqual("50", mock.Object.CurrentVolume());
 
 			currentVolume = 10;
-			Assert.AreEqual(___, mock.Object.CurrentVolume());
+			Assert.AreEqual("50", mock.Object.CurrentVolume());
 		}
 
 		[Test]
@@ -140,10 +140,10 @@ namespace MoqKoans
 
 			mock.Setup(m => m.CurrentVolume()).Returns(() => currentVolume.ToString());
 
-			Assert.AreEqual(___, mock.Object.CurrentVolume());
+			Assert.AreEqual("50", mock.Object.CurrentVolume());
 
 			currentVolume = 10;
-			Assert.AreEqual(___, mock.Object.CurrentVolume());
+			Assert.AreEqual("10", mock.Object.CurrentVolume());
 			
 			// Ask yourself; why does this behave differently than the previous test?
 		}
@@ -163,8 +163,8 @@ namespace MoqKoans
 					return 0;
 				});
 
-			Assert.AreEqual(___, mock.Object.Louder(10));			
-			Assert.AreEqual(___, mock.Object.Louder(-10));			
+			Assert.AreEqual(100, mock.Object.Louder(10));			
+			Assert.AreEqual(0, mock.Object.Louder(-10));			
 		}
 
 		[Test]
@@ -174,9 +174,9 @@ namespace MoqKoans
 			// This call to .Setup() tells Moq that when any int is passed to Louder(), return 10.
 			mock.Setup(m => m.Louder(It.IsAny<int>())).Returns(10);
 
-			Assert.AreEqual(___, mock.Object.Louder(0));
-			Assert.AreEqual(___, mock.Object.Louder(50));
-			Assert.AreEqual(___, mock.Object.Louder(-2));
+			Assert.AreEqual(10, mock.Object.Louder(0));
+			Assert.AreEqual(10, mock.Object.Louder(50));
+			Assert.AreEqual(10, mock.Object.Louder(-2));
 		}
 
 		[Test]
@@ -185,8 +185,8 @@ namespace MoqKoans
 			var mock = new Mock<IVolume>();
 			mock.Setup(m => m.Louder(10)).Returns(10);
 
-			Assert.AreEqual(___, mock.Object.Louder(10));
-			Assert.AreEqual(___, mock.Object.Louder(50));
+			Assert.AreEqual(10, mock.Object.Louder(10));
+			Assert.AreEqual(0, mock.Object.Louder(50));
 		}
 
 		[Test]
@@ -196,8 +196,8 @@ namespace MoqKoans
 			mock.Setup(m => m.Louder(1)).Returns(10);
 			mock.Setup(m => m.Louder(2)).Returns(20);
 
-			Assert.AreEqual(___, mock.Object.Louder(1));
-			Assert.AreEqual(___, mock.Object.Louder(2));
+			Assert.AreEqual(10, mock.Object.Louder(1));
+			Assert.AreEqual(20, mock.Object.Louder(2));
 		}
 
 		[Test]
@@ -207,16 +207,16 @@ namespace MoqKoans
 			mock.Setup(m => m.Louder(It.Is<int>(p => p >= 0))).Returns(10);
 			mock.Setup(m => m.Louder(It.Is<int>(p => p < 0))).Returns(-10);
 
-			Assert.AreEqual(___, mock.Object.Louder(5));
-			Assert.AreEqual(___, mock.Object.Louder(-2));
+			Assert.AreEqual(10, mock.Object.Louder(5));
+			Assert.AreEqual(-10, mock.Object.Louder(-2));
 		}
 
 		[Test]
 		public void SetupTheMockQuieterMethodToReturnTheDesiredResultsToMakeTheTestPass()
 		{
 			var mock = new Mock<IVolume>();
-			mock.___();
-			mock.___();
+			mock.Setup(volume => volume.Quieter(It.Is<int>(number => number >= 0))).Returns(100);
+			mock.Setup(volume => volume.Quieter(It.Is<int>(number => number <= 0))).Returns(0);
 
 			Assert.AreEqual(0, mock.Object.Quieter(-2));
 			Assert.AreEqual(0, mock.Object.Quieter(-1));
@@ -231,7 +231,7 @@ namespace MoqKoans
 			var mock = new Mock<IVolume>();
 			mock.Setup(x => x.CurrentVolume()).Returns(someObject.ReturnValue);
 
-			Assert.AreEqual(___, mock.Object.CurrentVolume());
+			Assert.AreEqual("I Am A Return Value!", mock.Object.CurrentVolume());
 		}
 
 		[Test]
@@ -242,10 +242,10 @@ namespace MoqKoans
 			mock.Setup(m => m.Louder(It.IsAny<int>())).Returns<int>(p => p);
 			// The <int> generic on .Returns() tells it the value of the parameter being passed in from the Louder() method.
 
-			Assert.AreEqual(___, volume.Louder(1));
-			Assert.AreEqual(___, volume.Louder(5));
-			Assert.AreEqual(10, volume.Louder(____));
-			Assert.AreEqual(20, volume.Louder(____));
+			Assert.AreEqual(1, volume.Louder(1));
+			Assert.AreEqual(5, volume.Louder(5));
+			Assert.AreEqual(10, volume.Louder(10));
+			Assert.AreEqual(20, volume.Louder(20));
 		}
 
 		[Test]
