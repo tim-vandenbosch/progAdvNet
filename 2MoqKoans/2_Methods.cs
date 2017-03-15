@@ -253,7 +253,7 @@ namespace MoqKoans
 		{
 			var mock = new Mock<IVolume>();
 			var volume = mock.Object;
-			mock.___();
+			mock.Setup(m => m.Quieter(It.IsAny<int>())).Returns<int>(p => p-1);
 
 			Assert.AreEqual(0, volume.Quieter(1));
 			Assert.AreEqual(1, volume.Quieter(2));
@@ -291,7 +291,7 @@ namespace MoqKoans
 			{
 				exceptionWasThrown = true;
 			}
-			Assert.AreEqual(___, exceptionWasThrown);
+			Assert.AreEqual(true, exceptionWasThrown);
 		}
 
 		[Test]
@@ -299,7 +299,7 @@ namespace MoqKoans
 		{
 			// hint: remember that MockBehavior.Strict will cause an Exception if the parameters don't match any .Setup() filters.
 			var mock = new Mock<IAddition>();
-			mock.___();
+		    mock.Setup(m => m.Add(____,____)).Throws(new Exception("Calling Add() will throw this exception on negative numbers."));
 
 			Assert.AreEqual(3, mock.Object.Add(1, 2));
 			Assert.AreEqual(10, mock.Object.Add(0, 10));
@@ -325,8 +325,8 @@ namespace MoqKoans
 
 			mock.Object.Louder(5);
 
-			Assert.AreEqual(___, louderWasCalled);
-			Assert.AreEqual(___, quieterWasCalled);
+			Assert.AreEqual(true, louderWasCalled);
+			Assert.AreEqual(true, quieterWasCalled);
 		}
 
 		[Test]
@@ -342,8 +342,8 @@ namespace MoqKoans
 
 			var result = mock.Object.Louder(5);
 
-			Assert.AreEqual(___, louderWasCalled);
-			Assert.AreEqual(___, result);
+			Assert.AreEqual(true, louderWasCalled);
+			Assert.AreEqual(false, result);
 
 			// The same thing can be done like this, in a single lambda in .Returns()
 			mock = new Mock<IVolume>();
