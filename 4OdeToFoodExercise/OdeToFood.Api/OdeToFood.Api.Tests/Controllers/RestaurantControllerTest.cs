@@ -65,18 +65,20 @@ namespace OdeToFood.Api.Tests.Controllers
             var controller = TestableRestaurantController.CreateInstance();
             var restaurant = new Restaurant
             {
-                Id = new Random().Next(1, 100) * 100,
+                Id = 10,
                 City = "Leuven",
                 Country = "Belgium",
                 Name = "Chéz Marcel"
             };
+            controller.RestaurantRepositoryMock.Setup(repo => repo.GetRestaurantIfExists(10)).Returns(restaurant);
 
             // act
             var returnedRestaurant =
-                controller.GetRestaurantIfExists(restaurant.Id) as OkNegotiatedContentResult<IEnumerable<Restaurant>>;
+                controller.GetRestaurantIfExists(10) as OkNegotiatedContentResult<Restaurant>;
 
             // assert
-            Assert.That(returnedRestaurant.Content, Is.EqualTo(restaurant));
+            Assert.That(returnedRestaurant, Is.Not.Null); // I don't want my result to be empty
+            Assert.That(returnedRestaurant.Content, Is.EqualTo(restaurant)); // I want to get my restaurant
         }
     }
 }
