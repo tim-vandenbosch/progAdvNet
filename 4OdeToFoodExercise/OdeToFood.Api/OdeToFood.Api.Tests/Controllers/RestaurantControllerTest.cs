@@ -12,6 +12,23 @@ namespace OdeToFood.Api.Tests.Controllers
     [TestFixture]
     public class RestaurantControllerTest
     {
+        private class TestableRestaurantController : RestaurantsController
+        {
+            public TestableRestaurantController(Mock<IRestaurantRepository> restaurantRepository)
+                : base(restaurantRepository.Object)
+            {
+                RestaurantRepositoryMock = restaurantRepository;
+            }
+
+            public Mock<IRestaurantRepository> RestaurantRepositoryMock { get; }
+
+            public static TestableRestaurantController CreateInstance()
+            {
+                var restaurantRepositoryMock = new Mock<IRestaurantRepository>();
+                return new TestableRestaurantController(restaurantRepositoryMock);
+            }
+        }
+
         [Test]
         public void Get_ReturnsAllRestaurantsFromRepository()
         {
@@ -21,52 +38,45 @@ namespace OdeToFood.Api.Tests.Controllers
             {
                 new Restaurant
                 {
-                    Id = new Random().Next(1,100)*100,
+                    Id = 10,
                     City = "Leuven",
                     Country = "Belgium",
                     Name = "Chéz Marcel"
                 }
             };
             controller.RestaurantRepositoryMock.Setup(repo => repo.GetAllRestaurants()).Returns(allRestaurants);
-            
             // act
-            var returnedRestaurants = controller.GetAllRestaurants();
-
+            var returnedRestaurants =
+                    controller.GetAllRestaurants() as OkNegotiatedContentResult<IEnumerable<Restaurant>>;
+                // get the result and put it in a 200(okResult) with content
             // assert
-            controller.RestaurantRepositoryMock.Verify(repo => repo.GetAllRestaurants(), Times.Once); // check so the function is just called once
-            Assert.That(returnedRestaurants, Is.EquivalentTo(allRestaurants)); // check if values are correct
-            Assert.That(returnedRestaurants, Is.EquivalentTo(OkResult = allRestaurants));
+            // I want to get 200 code with a list/single item in the body
+            controller.RestaurantRepositoryMock.Verify(repo => repo.GetAllRestaurants(), Times.Once);
+                // check so the function is just called once
+            Assert.That(returnedRestaurants, Is.Not.Null); // check if it gives something back
+            Assert.That(returnedRestaurants.Content, Is.EquivalentTo(allRestaurants));
+                // check if it gives the same back as it gets
         }
 
         [Test]
         public void Get_ReturnsRestaurantIfItExists()
         {
             // assign
-            var restaurantRepositoryMock = new Mock<IRestaurantRepository>();
-            var restaurant = new Restaurant();
-            restaurantRepositoryMock.Setup(repo => repo.GetRestaurantIfExists(1)).Returns(restaurant);
-            var controller = new RestaurantsController(restaurantRepositoryMock.Object);
+            var controller = TestableRestaurantController.CreateInstance();
+            var restaurant = new Restaurant
+            {
+                Id = new Random().Next(1, 100) * 100,
+                City = "Leuven",
+                Country = "Belgium",
+                Name = "Chéz Marcel"
+            };
 
             // act
-            var returnedRestaurant = controller.GetRestaurantIfExists(1);
+            var returnedRestaurant =
+                controller.GetRestaurantIfExists(restaurant.Id) as OkNegotiatedContentResult<IEnumerable<Restaurant>>;
 
             // assert
-            Assert.That(returnedRestaurant, Is.EqualTo(restaurant));
-        }
-
-        private class TestableRestaurantController : RestaurantsController
-        {
-            public Mock<IRestaurantRepository> RestaurantRepositoryMock { get; set; }
-            public TestableRestaurantController(Mock<IRestaurantRepository> restaurantRepository) : base(restaurantRepository.Object)
-            {
-                RestaurantRepositoryMock = restaurantRepository;
-            }
-
-            public static TestableRestaurantController CreateInstance()
-            {
-                var restaurantRepositoryMock = new Mock<IRestaurantRepository>();
-                return new TestableRestaurantController(restaurantRepositoryMock);
-            }
+            Assert.That(returnedRestaurant.Content, Is.EqualTo(restaurant));
         }
     }
 }
