@@ -7,6 +7,6 @@ namespace OdeToFood.Data
     public interface IRestaurantRepository
     {
         IEnumerable<Restaurant> GetAllRestaurants();
-        Restaurant GetRestaurantIfExists(int id);
+        Restaurant GetRestaurantById(int id);
     }
 }
